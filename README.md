@@ -2,7 +2,7 @@ GuidingNet
 =========
 GuidingNet is a method to reveal transcriptional cofactor and predict binding for DNA methyltransferase by network regularization.
 
-vPECA Source code
+GuidingNet Source code
 ================
 GuidingNet  
 Version 1.0 Last updated: June 2, 2020
