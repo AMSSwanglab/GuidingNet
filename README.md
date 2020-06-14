@@ -2,13 +2,9 @@ GuidingNet
 =========
 GuidingNet is a method to reveal transcriptional cofactor and predict binding for DNA methyltransferase by network regularization.
 
-Data availability
-====
-All data sets are available in public databases. We collected the ChIP-seq of DNA methyltransferases form the Cistrome Data Browser (http://cistrome.org/db). The corresponding paired RNA-seq and DNase-seq are downloaded from the ENCODE project. We collected RNA-seq data from other 145 mouse and 832 humansamples from the ENCODE and ROADMAP. Both mouse and human protein-protein interaction data are from the BIOGRID database (https://thebiogrid.org). 
-
 vPECA Source code
 ================
-GuidingNet
+GuidingNet  
 Version 1.0 Last updated: June 2, 2020
 
 Reference
@@ -31,6 +27,3 @@ Requirements
 =
 R
 
-Time
-=
-It depends on the size of the input data, generally between tens of seconds to a few minutes.
