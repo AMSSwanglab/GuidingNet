@@ -29,7 +29,7 @@ The main program is in GuidingNet.r file. Please run the script and get the resu
 
 Requirements
 =
-R 3.4.0
+R
 
 Time
 =
