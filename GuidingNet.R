@@ -50,6 +50,7 @@ X2 <- as.matrix(x2)
 fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict1 <- predict(fold_pre,type='response',X1 )
 fold_predict1 <- as.numeric(fold_predict1)
+names(fold_predict1) <- row.names(fold_test)
 true_value1 <- y1
 #fold 2 
 fold_test <- TrainingData[folds[[2]],]   
@@ -63,6 +64,7 @@ X2 <- as.matrix(x2)
 fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict2 <- predict(fold_pre,type='response',X1 )
 fold_predict2 <- as.numeric(fold_predict2)
+names(fold_predict2) <- row.names(fold_test)
 true_value2 <- y1
 #fold 3 
 fold_test <- TrainingData[folds[[3]],]   
@@ -77,6 +79,7 @@ fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict3 <- predict(fold_pre,type='response',X1 )
 fold_predict3 <- as.numeric(fold_predict3)
 true_value3 <- y1
+names(fold_predict3) <- row.names(fold_test)
 #fold 4 
 fold_test <- TrainingData[folds[[4]],]   
 fold_train <- TrainingData[-folds[[4]],]   
@@ -89,6 +92,7 @@ X2 <- as.matrix(x2)
 fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict4 <- predict(fold_pre,type='response',X1 )
 fold_predict4 <- as.numeric(fold_predict4)
+names(fold_predict4) <- row.names(fold_test)
 true_value4 <- y1
 #fold 5 
 fold_test <- TrainingData[folds[[5]],]   
@@ -102,6 +106,7 @@ X2 <- as.matrix(x2)
 fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict5 <- predict(fold_pre,type='response',X1 )
 fold_predict5 <- as.numeric(fold_predict5)
+names(fold_predict5) <- row.names(fold_test)
 true_value5 <- y1
 #fold 6 
 fold_test <- TrainingData[folds[[6]],]   
@@ -109,12 +114,13 @@ fold_train <- TrainingData[-folds[[6]],]
 y1 <- fold_test$Label
 y2 <- fold_train$Label
 x1 <- fold_test[,1:a]
-x2 <- old_train[,1:a]
+x2 <- fold_train[,1:a]
 X1 <- as.matrix(x1)
 X2 <- as.matrix(x2)
 fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict6 <- predict(fold_pre,type='response',X1 )
 fold_predict6 <- as.numeric(fold_predict6)
+names(fold_predict6) <- row.names(fold_test)
 true_value6 <- y1
 #fold 7
 fold_test <- TrainingData[folds[[7]],]   
@@ -128,6 +134,7 @@ X2 <- as.matrix(x2)
 fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict7 <- predict(fold_pre,type='response',X1 )
 fold_predict7 <- as.numeric(fold_predict7)
+names(fold_predict7) <- row.names(fold_test)
 true_value7 <- y1
 #fold 8 
 fold_test <- TrainingData[folds[[8]],]   
@@ -141,6 +148,7 @@ X2 <- as.matrix(x2)
 fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict8 <- predict(fold_pre,type='response',X1 )
 fold_predict8 <- as.numeric(fold_predict8)
+names(fold_predict8) <- row.names(fold_test)
 true_value8 <- y1
 #fold 9 
 fold_test <- TrainingData[folds[[9]],]   
@@ -154,7 +162,7 @@ X2 <- as.matrix(x2)
 fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict9 <- predict(fold_pre,type='response',X1 )
 fold_predict9 <- as.numeric(fold_predict9)
-
+names(fold_predict9) <- row.names(fold_test)
 true_value9 <- y1
 #fold 10 
 fold_test <- TrainingData[folds[[10]],]   
@@ -169,17 +177,19 @@ fold_pre <- cv.glmnet(X2,y2,family = "binomial",penalty.factor=w)
 fold_predict10 <- predict(fold_pre,type='response',X1 )
 fold_predict10 <- as.numeric(fold_predict10)
 true_value10 <- y1
+names(fold_predict10) <- row.names(fold_test)
 #ROC curve and AUC value 
 fold_predict <- c(fold_predict1,fold_predict2,fold_predict3,fold_predict4,fold_predict5,fold_predict6,fold_predict7,fold_predict8,fold_predict9,fold_predict10)
 true_value <- c(true_value1,true_value2,true_value3,true_value4,true_value5,true_value6,true_value7,true_value8,true_value9,true_value10)
 modelroc <- roc(true_value,fold_predict)
 AUCvalue <- auc(modelroc)
 AUCvalue <- round(AUCvalue,4)
-plot(modelroc, col="red",main = "",auc.polygon=TRUE,auc.polygon.col="white",legacy.axes=TRUE,grid.col=c("black", "black"),xaxs="i",yaxs="i",font.lab=2,cex.main=2,cex.lab=2)
+plot(modelroc, col="red",main = "GuidingNet",auc.polygon=TRUE,auc.polygon.col="white",legacy.axes=TRUE,grid.col=c("black", "black"),xaxs="i",yaxs="i",font.lab=2,cex.main=2,cex.lab=2)
 AUC<-c("AUC=")
 AUC<-paste(AUC,AUCvalue) 
 legend("bottomright",legend = AUC,col=c("red"),lwd = 2,cex=1.8)
 
+probability <- fold_predict
 #Generate GuidingNet
 fit<-fold_pre
 coefficients <- coef(fit,s=fit$lambda.min)
@@ -211,4 +221,6 @@ for(i in SecondTFofCGN) {
 }
 GN <- as.matrix(CGN[r,c])
 colnames(GN) <- cNames
-rownames(GN) <- rNames # GN is the GuidingNet 
+rownames(GN) <- rNames # GN is the GuidingNet
+write.csv(probability, "./Output/probability.csv")
+write.csv(GN, "./Output/GuidingNet TF network.csv")
