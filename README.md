@@ -21,9 +21,9 @@ GuidingNet model takes the context specific and non-specific genomic data as inp
 
 Running GuidingNet
 =
-The main program is in GuidingNet.r file. Please run the script and get the result from the folder called Output. Output includes the following two parts: 1) The ROC curve and AUC value of DNMT binding prediction, 2) A key TF network is related to DNMT binding in corresponding tissue or cell line.
+The main program is in GuidingNet.r file. Please run the script and get the result from the folder called Output. Output includes the following two parts: 1) The probability that each genome region in the data is the binding site of DNMT, 2) A key TF network is related to DNMT binding in corresponding tissue or cell line.
 
 Requirements
 =
-R
+R 3.6.0
 
